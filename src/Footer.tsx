@@ -26,30 +26,40 @@ const Footer: React.FC<FooterProps> = ({ activePage, setActivePage }) => {
     navigation.navigate('ProfileView' as never);
   };
 
+  const iconSize = 28; // Base size of icons
+  const activeIconSize = 32; // Increased size for selected icon
+  const iconContainerWidth = 36; // Fixed width for each icon container
+
   return (
     <View style={styles.footer}>
       <TouchableOpacity onPress={handleHomePress}>
-        <Ionicons
-          name="home"
-          size={24}
-          color={activePage === 'SwipeView' ? 'yellow' : '#fff'} // Updated comparison here
-        />
+        <View style={[styles.iconContainer, { width: iconContainerWidth }]}>
+          <Ionicons
+            name="home"
+            size={activePage === 'SwipeView' ? activeIconSize : iconSize}
+            color={activePage === 'SwipeView' ? 'yellow' : '#fff'}
+          />
+        </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleHeartPress}>
-        <Ionicons
-          name="heart"
-          size={24}
-          color={activePage === 'LikedView' ? 'yellow' : '#fff'} // Updated comparison here
-        />
+        <View style={[styles.iconContainer, { width: iconContainerWidth }]}>
+          <Ionicons
+            name="heart"
+            size={activePage === 'LikedView' ? activeIconSize : iconSize}
+            color={activePage === 'LikedView' ? 'yellow' : '#fff'}
+          />
+        </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleProfilePress}>
-        <Ionicons
-          name="person"
-          size={24}
-          color={activePage === 'ProfileView' ? 'yellow' : '#fff'} // Color for ProfileView icon
-        />
+        <View style={[styles.iconContainer, { width: iconContainerWidth }]}>
+          <Ionicons
+            name="person"
+            size={activePage === 'ProfileView' ? activeIconSize : iconSize}
+            color={activePage === 'ProfileView' ? 'yellow' : '#fff'}
+          />
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -65,6 +75,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
+  },
+  iconContainer: {
+    alignItems: 'center',
   },
 });
 

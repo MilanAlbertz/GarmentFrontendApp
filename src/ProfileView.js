@@ -1,17 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { FIREBASE_AUTH } from '../FirebaseConfig';
 
-function ProfileView() {
+function ProfileView({ navigation }) {
+  const goToLogin = () => {
+    navigation.navigate('LoginView'); // Replace 'LoginView' with the name of your login screen
+  };
+
   return (
     <LinearGradient colors={['#424242', '#A20000']} style={{ flex: 1 }}>
       <View style={styles.container}>
-        {/* Your content within the swipe view */}
-        <Text>Your Profile View Content</Text>
+        <Button title="Logout" onPress={() => FIREBASE_AUTH.signOut()} />
       </View>
     </LinearGradient>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -15,12 +15,13 @@ const Header = () => {
             justifyContent: 'space-between',
             height: 60,
             paddingHorizontal: 20,
+            zIndex: 1
           }}
         >
           {/* Logo */}
           <Image
             source={require('../assets/logo.png')}
-            style={{ width: 150, marginRight: 10 }}
+            style={{ width: 150, height: 40, marginRight: 10 }}
             resizeMode="contain"
           />
 

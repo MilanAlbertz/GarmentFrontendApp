@@ -1,70 +1,86 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import Header from './src/Header';
 import SwipeView from './src/SwipeView';
 import Footer from './src/Footer';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import LikedView from './src/LikedView';
 import ProfileView from './src/ProfileView';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import CardDetailView from './src/CardDetailView';
+import LoginView from './src/LoginView';
+import {onAuthStateChanged} from 'firebase/auth';
+import { FIREBASE_AUTH } from './FirebaseConfig';
+import firebase from 'firebase/app'
 
-type RootStackParamList = {
-  SwipeView: undefined;
-  LikedView: undefined;
-  ProfileView: undefined;
-  // Define other screens here
-};
+const Stack = createStackNavigator();
 
-const Stack = createStackNavigator<RootStackParamList>();
+const InsideStack = createStackNavigator();
+
+function InsideLayout() {
+  return(
+    <InsideStack.Navigator 
+    screenOptions={{
+      header: (props) => <Header/>, // Custom Header component
+    }}>
+      <InsideStack.Screen name="SwipeView" component={SwipeView} />
+      <InsideStack.Screen name="LikedView" component={LikedView} />
+      <InsideStack.Screen name="ProfileView" component={ProfileView} />
+      <Stack.Screen
+            name="CardDetailView"
+            component={CardDetailView}
+            options={{
+              cardStyleInterpolator: ({ current: { progress }, layouts }) => ({
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+                overlayStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 0.5, 0.9, 1],
+                    outputRange: [0, 0.25, 0.7, 1],
+                  }),
+                },
+              }),
+              animationEnabled: true,
+              animationTypeForReplace: 'pop',
+            }}
+          />
+        </InsideStack.Navigator>
+  )
+}
 
 function App() {
-  const [activePage, setActivePage] = useState('SwipeView'); // Manage active page state
+  const [user, setUser] = useState<import('firebase/auth').User | null>(null);
 
-  const screenOptions: StackNavigationOptions = {
-    headerShown: false, // Hide the default navigator header
-    cardStyle: { backgroundColor: 'transparent' }, // For smooth animation
-    transitionSpec: {
-      open: { animation: 'timing', config: { duration: 300 } },
-      close: { animation: 'timing', config: { duration: 300 } },
-    },
-    cardStyleInterpolator: ({ current, layouts }) => {
-      const swipeViewAnimation = current.progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [-layouts.screen.width, 0], // Slide in from the left for SwipeView
-      });
-
-      const likedProfileViewAnimation = current.progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [layouts.screen.width, 0], // Slide in from the right for LikedView and ProfileView
-      });
-
-      return {
-        cardStyle: {
-          transform: [
-            {
-              translateX: activePage === 'SwipeView'
-                ? swipeViewAnimation
-                : (activePage === 'LikedView' || activePage === 'ProfileView')
-                ? likedProfileViewAnimation
-                : 0, // No animation for other pages
-            },
-          ],
-        },
-      };
-    },
-  };
-
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log('user', user);
+      setUser(user);
+    })
+  }, []);
+  const [activePage, setActivePage] = useState('SwipeView');
   return (
     <NavigationContainer>
-      <Header />
-      <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name="SwipeView" component={SwipeView} />
-        <Stack.Screen name="LikedView" component={LikedView} />
-        <Stack.Screen name="ProfileView" component={ProfileView} />
+      <Stack.Navigator>
+        {user ? (
+          <Stack.Screen name="Inside" component={InsideLayout} options={{headerShown: false}}/>
+        ) : (
+          <Stack.Screen name="LoginView" component={LoginView} options={{headerShown: false}}/>
+        )}
       </Stack.Navigator>
-    <Footer activePage={activePage} setActivePage={setActivePage} />
-  </NavigationContainer>
+      {user ? ( // Render footer only when user is not null
+        <Footer activePage={activePage} setActivePage={setActivePage} />
+      ) : null}
+        
+      </NavigationContainer>
   );
 }
 
