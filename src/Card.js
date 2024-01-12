@@ -4,7 +4,7 @@ import TinderCard from 'react-tinder-card';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function Card({ item }) {
+function Card({ item,  updateSwipes} ) {
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
   const cardWidth = screenWidth - 20; // 5 pixels from left and right
   const cardHeight = screenHeight - 200; // 10 pixels from top and bottom
@@ -55,7 +55,13 @@ function Card({ item }) {
     } else if (direction === 'down') {
       Linking.openURL(item.siteUrl)
         .catch((err) => console.error('An error occurred', err));
-    } else {
+    } else if (direction === 'left') {
+      setCardVisible(false);
+      updateSwipes();
+    } else if (direction === 'right') {
+      updateSwipes();
+      setCardVisible(false);
+    }else {
       setCardVisible(false);
     }
   };

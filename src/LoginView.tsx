@@ -1,11 +1,13 @@
 import {View, Text, ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import React, { useState} from 'react';
-import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { FIREBASE_AUTH, FIRESTORE_DB } from '../FirebaseConfig';
 import { TextInput } from 'react-native-gesture-handler';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
@@ -28,6 +30,12 @@ const LoginView = () => {
     try{
       const response = await createUserWithEmailAndPassword(auth, email, password);
       console.log(response);
+
+      await setDoc(doc(FIRESTORE_DB, 'userProfiles', response.user.uid), {
+        email: email,
+        profileImageURL: '', // Set image to empty string
+        username: username, // Set username to empty string
+      });
       alert('Check your emails!')
     } catch (error:any){
       console.log(error);
@@ -59,8 +67,20 @@ const LoginView = () => {
 
           <View style={styles.form}>
             <View style={styles.input}>
-              <Text style={styles.inputLabel}>Email address</Text>
+            <Text style={styles.inputLabel}>Username</Text>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="user123"
+                placeholderTextColor="#6b7280"
+                style={styles.inputControl}
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+              />
+            </View>
 
+            <View style={styles.input}>
+              <Text style={styles.inputLabel}>Email address</Text>
               <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -71,7 +91,7 @@ const LoginView = () => {
                 value={email}
                 onChangeText={(text) => setEmail(text)}
               />
-            </View>
+              </View>
 
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Password</Text>

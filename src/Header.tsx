@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, SafeAreaView, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import FilterView from './FilterView';
 
 const Header = () => {
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+  const toggleFilter = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
   return (
     <View style={{ backgroundColor: '#202429' }}>
       <StatusBar backgroundColor="#202429" barStyle="light-content" />
@@ -34,8 +41,9 @@ const Header = () => {
 
             {/* Filter Icon */}
             <TouchableOpacity>
-              <Ionicons name="filter" size={24} color="#fff" />
+              <Ionicons name="filter" size={24} color="#fff" onPress={toggleFilter}/>
             </TouchableOpacity>
+            <FilterView isVisible={isFilterVisible} onClose={() => setIsFilterVisible(false)} />
           </View>
         </View>
       </SafeAreaView>
