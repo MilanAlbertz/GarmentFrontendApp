@@ -11,7 +11,7 @@ export async function GetGarments(type, gender, user) {
           return data;
         } 
         catch (error) {
-            console.error('chError fetching data:', error);
+            console.error('Error fetching data:', error);
             const mockData = [
             {
               "id": 2,

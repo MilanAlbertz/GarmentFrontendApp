@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet, Linking, Dimensions } from 'react-native
 import TinderCard from 'react-tinder-card';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LikeGarment } from '../api/likeGarment';
+import { FIREBASE_AUTH } from '../FirebaseConfig';
 
 function Card({ item,  updateSwipes} ) {
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -60,6 +62,9 @@ function Card({ item,  updateSwipes} ) {
       updateSwipes();
     } else if (direction === 'right') {
       updateSwipes();
+      const user = FIREBASE_AUTH.currentUser;
+      const userID = user.uid;
+      LikeGarment(item.id, userID);
       setCardVisible(false);
     }else {
       setCardVisible(false);
@@ -70,7 +75,6 @@ function Card({ item,  updateSwipes} ) {
     <View style={[styles.cardContainer, { transform: [{ translateY: cardTransform }] }]}>
       {cardVisible && (
         <TinderCard
-          onPress={() => onCardPress()}
           onSwipe={onSwipe}
         >
           <View style={[styles.card, { width: cardWidth, height: cardHeight }]}>

@@ -68,13 +68,13 @@ const Footer: React.FC<FooterProps> = ({ activePage, setActivePage }) => {
 const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#202429',
-    height: 60,
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  backgroundColor: '#202429',
+  height: 60,
+  bottom: 0,
+  width: '100%',
+  zIndex: 2, // Ensure the footer is on top of the content
   },
   iconContainer: {
     alignItems: 'center',

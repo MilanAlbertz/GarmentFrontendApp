@@ -13,6 +13,7 @@ import LoginView from './src/LoginView';
 import {onAuthStateChanged} from 'firebase/auth';
 import { FIREBASE_AUTH } from './FirebaseConfig';
 import firebase from 'firebase/app'
+import { StyleSheet } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -68,21 +69,36 @@ function App() {
   }, []);
   const [activePage, setActivePage] = useState('SwipeView');
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen name="Inside" component={InsideLayout} options={{headerShown: false}}/>
-        ) : (
-          <Stack.Screen name="LoginView" component={LoginView} options={{headerShown: false}}/>
-        )}
-      </Stack.Navigator>
-      {user ? ( // Render footer only when user is not null
+    <View style={{ flex: 1 }}>
+  <NavigationContainer>
+    {/* Stack Navigator and other screens */}
+    <Stack.Navigator>
+      {user ? (
+        <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
+      ) : (
+        <Stack.Screen name="LoginView" component={LoginView} options={{ headerShown: false }} />
+      )}
+    </Stack.Navigator>
+
+    {/* Footer should be a descendant of NavigationContainer */}
+    {user ? (
+      <View style={styles.footerContainer}>
         <Footer activePage={activePage} setActivePage={setActivePage} />
-      ) : null}
-        
-      </NavigationContainer>
+      </View>
+    ) : null}
+  </NavigationContainer>
+</View>
+
   );
 }
+
+const styles = StyleSheet.create({
+  footerContainer: {
+    position:'relative',
+    bottom: 0,
+    width: '100%',
+  },
+});
 
 export default function Main() {
   return (

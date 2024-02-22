@@ -2,8 +2,9 @@ import {View, Text, ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet,
 import React, { useState} from 'react';
 import { FIREBASE_AUTH, FIRESTORE_DB } from '../FirebaseConfig';
 import { TextInput } from 'react-native-gesture-handler';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onIdTokenChanged  } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { RegisterUser } from '../api/registerUser';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
@@ -36,7 +37,14 @@ const LoginView = () => {
         profileImageURL: '', // Set image to empty string
         username: username, // Set username to empty string
       });
-      alert('Check your emails!')
+      const user = FIREBASE_AUTH.currentUser;
+      if (user) {
+        const userID = user.uid;
+        RegisterUser(userID);
+      } else {
+        console.log('No user is currently logged in.');
+      }
+      
     } catch (error:any){
       console.log(error);
       alert('Sign up failed: ' + error.message);
