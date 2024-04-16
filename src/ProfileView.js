@@ -109,7 +109,7 @@ source={
       <Text style={styles.infoValue}>{userData ? userData.email : 'Loading...'}</Text>
     </View>
     <View style={styles.infoContainer}>
-    <Button title="Logout" onPress={() => FIREBASE_AUTH.signOut()} />
+    <Button title="Logout" color={"#C7B0BC"} onPress={() => FIREBASE_AUTH.signOut()} />
     </View>
   </View>  );
 }; 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   }, 
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F2E4E8',
     padding: 20,
   },
   avatarContainer: {
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Background color for the edit icon
-    borderRadius: 20,
+    backgroundColor: '#D6C1C7', // Background color for the edit icon
+    borderRadius: 50,
     padding: 5,
   }
 });

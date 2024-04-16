@@ -37,8 +37,9 @@ function CardDetailView({ route, navigation }) {
             </View>
           ))}
         </ScrollView>
+        <Text style={styles.itemPrice}>{`$${item.price}`}</Text>
         <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.itemPrice}>{`Price: $${item.price}`}</Text>
+
       </View>
     </View>
   );
@@ -47,22 +48,26 @@ function CardDetailView({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F2E4E8',
   },
   popup: {
-    backgroundColor: 'white',
-    padding: 20,
+    display: 'flex',
+    backgroundColor: '#F2E4E8',
+    padding: 0,
     borderRadius: 0,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+
   },
   title: {
     fontSize: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    textAlign: 'left',
+  },
+  itemPrice: {
+    fontSize: 25,
+    padding: 20,
+    textAlign: 'left',
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
   },
   closeIcon: {
     position: 'absolute',
@@ -81,15 +86,11 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center the images vertically
   },
   itemImage: {
-    width: screenWidth - 100,
-    height: screenWidth,
+    width: screenWidth,
+    height: screenWidth + 200,
     resizeMode: 'cover',
   },
-  itemPrice: {
-    fontSize: 18,
-    marginTop: 10,
-    textAlign: 'center',
-  },
+
 });
 
 export default CardDetailView;

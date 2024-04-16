@@ -37,7 +37,7 @@ function LikedView() {
   };
 
   return (
-    <LinearGradient colors={['#424242', '#A20000']} style={{ flex: 1 }}>
+    <LinearGradient colors={['#AC8A94', '#F2E4E8']} style={{ flex: 1 }}>
       {items && items.length > 0 ? (
         <FlatList
           data={items}

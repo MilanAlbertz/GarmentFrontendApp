@@ -30,7 +30,7 @@ function FilterView({ isVisible, onClose }) {
       onRequestClose={() => onClose()} // Close modal on back press
     >
       <LinearGradient
-        colors={['#667eea', '#764ba2']}
+        colors={['#AC8A94', '#F2E4E8']}
         style={styles.gradientBackground}
       >
 <TouchableOpacity onPress={() => {
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: '80%',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    width: '90%',
+    backgroundColor: '#F2E4E8',
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: 'center',
   },
   closeButton: {

@@ -59,18 +59,9 @@ const LoginView = () => {
               alt=""
               resizeMode="contain"
               style={styles.headerImg}
-              source={{
-                uri: 'https://withfra.me/android-chrome-512x512.png',
-              }}
+              source={require('../assets/StyleMate.png')}
             />
 
-            <Text style={styles.title}>
-              Sign in to <Text style={{ color: '#075eec' }}>MyApp</Text>
-            </Text>
-
-            <Text style={styles.subtitle}>
-              Get access to your portfolio and more
-            </Text>
           </View>
 
           <View style={styles.form}>
@@ -115,8 +106,8 @@ const LoginView = () => {
               />
             </View>
 
-            <Button title='Login' onPress={signIn}/>
-            <Button title='Create account' onPress={signUp}/>
+            <Button title='Login' onPress={signIn} color={"#C7B0BC"}/>
+            <Button title='Create account' onPress={signUp} color={"#99779F"}/>
           </View>
         </View>
   );
@@ -127,13 +118,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+    backgroundColor: '#AC8A94'
   },
   header: {
     marginVertical: 36,
   },
   headerImg: {
-    width: 80,
-    height: 80,
+    width: 200,
+    height: 200,
     alignSelf: 'center',
     marginBottom: 36,
   },
@@ -172,14 +164,14 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#222',
+    color: 'white',
     marginBottom: 8,
   },
   inputControl: {
     height: 44,
     backgroundColor: '#fff',
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     fontSize: 15,
     fontWeight: '500',
     color: '#222',
@@ -194,6 +186,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#075eec',
     borderColor: '#075eec',
+    margin: 10,
   },
   btnText: {
     fontSize: 18,
@@ -201,5 +194,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#fff',
   },
+  Button: {
+
+  }
 });
 export default LoginView;

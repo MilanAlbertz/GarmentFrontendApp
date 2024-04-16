@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <View style={{ backgroundColor: '#202429' }}>
+    <View style={{ backgroundColor: '#AC8A94' }}>
       <StatusBar backgroundColor="#202429" barStyle="light-content" />
       <SafeAreaView>
         <View
@@ -27,7 +27,7 @@ const Header = () => {
         >
           {/* Logo */}
           <Image
-            source={require('../assets/logo.png')}
+            source={require('../assets/StyleMate.png')}
             style={{ width: 150, height: 40, marginRight: 10 }}
             resizeMode="contain"
           />

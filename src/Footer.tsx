@@ -37,7 +37,7 @@ const Footer: React.FC<FooterProps> = ({ activePage, setActivePage }) => {
           <Ionicons
             name="home"
             size={activePage === 'SwipeView' ? activeIconSize : iconSize}
-            color={activePage === 'SwipeView' ? 'yellow' : '#fff'}
+            color={activePage === 'SwipeView' ? '#AC8A94' : '#DDCCD1'}
           />
         </View>
       </TouchableOpacity>
@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ activePage, setActivePage }) => {
           <Ionicons
             name="heart"
             size={activePage === 'LikedView' ? activeIconSize : iconSize}
-            color={activePage === 'LikedView' ? 'yellow' : '#fff'}
+            color={activePage === 'LikedView' ? '#AC8A94' : '#DDCCD1'}
           />
         </View>
       </TouchableOpacity>
@@ -57,7 +57,7 @@ const Footer: React.FC<FooterProps> = ({ activePage, setActivePage }) => {
           <Ionicons
             name="person"
             size={activePage === 'ProfileView' ? activeIconSize : iconSize}
-            color={activePage === 'ProfileView' ? 'yellow' : '#fff'}
+            color={activePage === 'ProfileView' ? '#AC8A94' : '#DDCCD1'}
           />
         </View>
       </TouchableOpacity>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
-  backgroundColor: '#202429',
+  backgroundColor: '#F2E4E8', //color footer
   height: 60,
   bottom: 0,
   width: '100%',

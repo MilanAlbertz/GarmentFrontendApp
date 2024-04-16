@@ -8,7 +8,7 @@ import { FIREBASE_AUTH } from '../FirebaseConfig';
 
 function Card({ item,  updateSwipes} ) {
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-  const cardWidth = screenWidth - 20; // 5 pixels from left and right
+  const cardWidth = screenWidth - 40; // 5 pixels from left and right
   const cardHeight = screenHeight - 200; // 10 pixels from top and bottom
 
   const styles = StyleSheet.create({
@@ -21,29 +21,29 @@ function Card({ item,  updateSwipes} ) {
       marginLeft: 5,
       marginRight: 5,
       zIndex: item.id,
-      paddingBottom: 60,
+      paddingBottom: 0,
       position: 'absolute',
     },
     card: {
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
-      borderRadius: 8,
-      borderWidth: 1,
-      borderColor: 'black',
-      padding: 10,
+      borderRadius: 20,
+      borderWidth: 2,
+      borderColor: 'white',
+      padding: 0,
       overflow: 'hidden',
     },
     itemName: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 10,
+      margin: 10,
       textAlign: 'center'
     },
     itemImage: {
-      width: cardWidth - 40,
-      height: cardHeight - 200,
-      resizeMode: 'contain',
+      width: cardWidth - 0,
+      height: cardHeight - 0,
+      resizeMode: 'cover' ,
     },
   });
 
@@ -82,7 +82,7 @@ function Card({ item,  updateSwipes} ) {
               source={{ uri: item.imageUrls[0].url }}
               style={styles.itemImage}
             />
-            <Text style={styles.itemName}>{item.name}</Text>
+
           </View>
         </TinderCard>
       )}
