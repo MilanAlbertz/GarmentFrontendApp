@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { GetLikedGarments } from '../api/getLikedGarments';
 import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { useNavigation } from '@react-navigation/native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
 function LikedView() {
   const [items, setItems] = useState([]);
+  const navigation = useNavigation();
 
+  const handleCardPress = (item) => {
+    // Navigate to the CardDetailView screen
+    navigation.navigate('CardDetailView', { item }); // Pass any necessary parameters
+  };
   useEffect(() => {
     const user = FIREBASE_AUTH.currentUser;
     const userID = user.uid;
@@ -26,13 +33,12 @@ function LikedView() {
     const cardHeight = items.length === 1 ? 500 : 250;
 
     return (
-      <View style={[styles.card, { height: cardHeight }]}>
+<TouchableOpacity onPress={() => handleCardPress(item)} style={[styles.card, { height: cardHeight }]}>
         <Image
           source={{ uri: item.imageUrls[0].url || 'default-image-url' }}
           style={styles.image}
         />
-        <Text key={item.id}>{item.name}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

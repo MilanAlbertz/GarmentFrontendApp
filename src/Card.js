@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LikeGarment } from '../api/likeGarment';
 import { FIREBASE_AUTH } from '../FirebaseConfig';
 
-function Card({ item,  updateSwipes} ) {
+function Card({ item,  updateSwipes, resetCard} ) {
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
   const cardWidth = screenWidth - 40; // 5 pixels from left and right
   const cardHeight = screenHeight - 200; // 10 pixels from top and bottom
@@ -54,9 +54,13 @@ function Card({ item,  updateSwipes} ) {
   const onSwipe = (direction) => {
     if (direction === 'up') {
       navigation.navigate('CardDetailView', { item });
+      resetCard(item);
+      setCardVisible(false);
     } else if (direction === 'down') {
       Linking.openURL(item.siteUrl)
         .catch((err) => console.error('An error occurred', err));
+        resetCard(item);
+        setCardVisible(false);
     } else if (direction === 'left') {
       setCardVisible(false);
       updateSwipes();
@@ -78,10 +82,11 @@ function Card({ item,  updateSwipes} ) {
           onSwipe={onSwipe}
         >
           <View style={[styles.card, { width: cardWidth, height: cardHeight }]}>
+          {item.imageUrls[0] && item.imageUrls[0].url && (
             <Image
               source={{ uri: item.imageUrls[0].url }}
               style={styles.itemImage}
-            />
+            />)}
 
           </View>
         </TinderCard>

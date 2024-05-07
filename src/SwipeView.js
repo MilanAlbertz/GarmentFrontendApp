@@ -1,54 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Image, TouchableOpacity, Animated, PanResponder } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import TinderCard from 'react-tinder-card'
 import Card from './Card';
 import { GetGarments } from '../api/getGarments';
 import ApiVariables from '../api/ApiVariables';
+import { useAppContext } from '../AppContext';
 
 function SwipeView() {
   const [items, setItems] = useState([]);
-  const [swipes, setSwipes] = useState(0);
-  const rerender = 1;
+  const { filterChanged } = useAppContext();
 
   useEffect(() => {     
-    CallApi();
+    callApi();
   }, []);
+
+  useEffect(() => {     
+    callApi();
+  }, [filterChanged]);
 
   const updateSwipes = () => {
     items.shift();
-    if(items.length === 2){
-      CallApi();
+    if(items.length === 1){
+      callApi();
     }
  }
 
- const CallApi = () => {
-  const type = ApiVariables.type;
-  const gender = ApiVariables.gender;
-  GetGarments(type, gender)
-  .then(data => {
-      setItems(data);
-  })
-  .catch(error => {
-      console.error('Error fetching data:', error);
-      // Handle the error
-  });
- }
+  const callApi = () => {
+    const type = ApiVariables.type;
+    const gender = ApiVariables.gender;
+    const tags = ApiVariables.tags;
+    GetGarments(type, gender, tags)
+      .then(data => {
+        setItems(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        // Handle the error
+      });
+  };
 
- return (
-  <LinearGradient colors={['#AC8A94', '#F2E4E8']} style={{ flex: 1 }}>
-    <View style={styles.centeredContent}>
+  const resetCard = (item) => {
+    setItems([item, ...items]);
+  };
+
+  return (
+    <LinearGradient colors={['#AC8A94', '#F2E4E8']} style={{ flex: 1 }}>
+      <View style={styles.centeredContent}>
       {items ? (
         items.length > 0
           ? items.slice().reverse().map((item) => (
-              <Card key={item.id} item={item} updateSwipes={updateSwipes} />
+            <Card key={item.id} item={item} updateSwipes={updateSwipes} resetCard={() => resetCard(item)} />
             ))
           : <Text>No more items to show</Text>
       ) : <Text>No more items to show</Text>}
     </View>
-  </LinearGradient>
-);
+    </LinearGradient>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -61,4 +68,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
 export default SwipeView;

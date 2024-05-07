@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export async function GetLikedGarments(userID) {
     const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:5256/api/Garment/likedgarments?userId='+userID);
+          const response = await fetch('http://localhost/api/Garment/likedgarments?userId='+userID);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

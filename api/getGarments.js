@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-export async function GetGarments(type, gender, user) {
+export async function GetGarments(type, gender, tags, user) {
     const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:5256/api/Garment/random10?type='+type+'&gender='+gender);
+          const response = await fetch('http://localhost/api/Garment/random10?type='+type+'&gender='+gender+'&tags='+tags);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

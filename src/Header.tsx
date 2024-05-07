@@ -25,23 +25,19 @@ const Header = () => {
             zIndex: 1
           }}
         >
-          {/* Logo */}
           <Image
             source={require('../assets/StyleMate.png')}
             style={{ width: 150, height: 40, marginRight: 10 }}
             resizeMode="contain"
           />
 
-          {/* Icons */}
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* Notifications Icon */}
             <TouchableOpacity style={{ marginRight: 20 }}>
               <Ionicons name="notifications" size={24} color="#fff" />
             </TouchableOpacity>
 
-            {/* Filter Icon */}
-            <TouchableOpacity>
-              <Ionicons name="filter" size={24} color="#fff" onPress={toggleFilter}/>
+            <TouchableOpacity onPress={toggleFilter}>
+              <Ionicons name="filter" size={24} color="#fff"/>
             </TouchableOpacity>
             <FilterView isVisible={isFilterVisible} onClose={() => setIsFilterVisible(false)} />
           </View>

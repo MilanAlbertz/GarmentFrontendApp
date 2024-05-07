@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export async function LikeGarment(garmentID, userID) {
   try {
-    const apiUrl = 'http://localhost:5256/api/Garment/StoreLikedGarmentToUser?garmentId='+garmentID+'&userId='+userID;
+    const apiUrl = 'http://localhost/api/Garment/StoreLikedGarmentToUser?garmentId='+garmentID+'&userId='+userID;
     const response = await fetch(apiUrl, {
       method: 'POST'
     });

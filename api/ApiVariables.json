@@ -1,4 +1,6 @@
 {
     "type": "T-Shirts",
-    "gender": "Men"
+    "gender": "Men",
+    "tags": []
 }
+

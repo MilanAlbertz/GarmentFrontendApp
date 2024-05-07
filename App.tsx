@@ -14,6 +14,8 @@ import {onAuthStateChanged} from 'firebase/auth';
 import { FIREBASE_AUTH } from './FirebaseConfig';
 import firebase from 'firebase/app'
 import { StyleSheet } from 'react-native';
+import { AppProvider } from './AppContext';
+
 
 const Stack = createStackNavigator();
 
@@ -23,7 +25,7 @@ function InsideLayout() {
   return(
     <InsideStack.Navigator 
     screenOptions={{
-      header: (props) => <Header/>, // Custom Header component
+      headerShown: false,
     }}>
       <InsideStack.Screen name="SwipeView" component={SwipeView} />
       <InsideStack.Screen name="LikedView" component={LikedView} />
@@ -69,25 +71,27 @@ function App() {
   }, []);
   const [activePage, setActivePage] = useState('SwipeView');
   return (
+    <AppProvider>
     <View style={{ flex: 1 }}>
-  <NavigationContainer>
-    {/* Stack Navigator and other screens */}
-    <Stack.Navigator>
-      {user ? (
-        <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
-      ) : (
-        <Stack.Screen name="LoginView" component={LoginView} options={{ headerShown: false }} />
-      )}
-    </Stack.Navigator>
-
-    {/* Footer should be a descendant of NavigationContainer */}
-    {user ? (
-      <View style={styles.footerContainer}>
-        <Footer activePage={activePage} setActivePage={setActivePage} />
-      </View>
-    ) : null}
-  </NavigationContainer>
+    <NavigationContainer>
+          {user ? (
+            <>
+              <Header />
+              <Stack.Navigator>
+                <Stack.Screen name="Inside" component={InsideLayout} options={{ headerShown: false }} />
+              </Stack.Navigator>
+              <View style={styles.footerContainer}>
+                <Footer activePage={activePage} setActivePage={setActivePage} />
+              </View>
+            </>
+          ) : (
+            <Stack.Navigator>
+              <Stack.Screen name="LoginView" component={LoginView} options={{ headerShown: false }} />
+            </Stack.Navigator>
+          )}
+        </NavigationContainer>
 </View>
+</AppProvider>
 
   );
 }

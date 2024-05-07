@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export async function RegisterUser(userID) {
   try {
     // Make a call to your API to register the user using the fetch API
-    const apiUrl = `http://localhost:5256/api/User/RegisterUser?userID=${userID}`;
+    const apiUrl = `http://localhost/api/User/RegisterUser?userID=${userID}`;
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
